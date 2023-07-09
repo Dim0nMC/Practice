@@ -59,12 +59,12 @@ namespace Task2
         public static IEnumerable<int> _GetPermutations(this IEnumerable<int> collection, IList<int> arr,string current="")
         {
             
-                if (arr.Count == 0) 
+                if (arr.Count == 0) //если все элементы использованы, выводим на консоль получившуюся строку и возвращаемся
                 {
                     Console.WriteLine(current);
                     return collection;
                 }
-                for (int i = 0; i < arr.Count; i++) 
+                for (int i = 0; i < arr.Count; i++) //в цикле для каждого элемента прибавляем его к итоговой строке, создаем новый список из оставшихся элементов, и вызываем эту же функцию рекурсивно с новыми параметрами.
                     List<int> lst = new List<int>(arr);
                     lst.RemoveAt(i);
                     lst._GetPermutations(lst, current + arr[i].ToString());
