@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,52 +9,46 @@ namespace Task2
 {
     public static class EnumerableExtensions
     {
-        public static IEnumerable<T> _GetCombines<T>(
-        this IEnumerable<T> collection, int k)
+        private static void Similarity<T>(this IEnumerable<T> collection, IEqualityComparer<T> comparer)
         {
-            
-            k = 2;
-            foreach (var item1 in collection)
+            var tmp = collection.Distinct(comparer);
+            if (collection.Count() != collection.Distinct(comparer).Count())
             {
-                
-                foreach (var item2 in collection)
-                {
-                    
-                    if(item2 >= item1)
-                    {
-                        yield return item1;
-                        yield return item2;
-                    }
-                        
-                }
+                throw new ArgumentException(nameof(collection));
             }
         }
-
-        public static void GetAllSubstes<T>(
-        this IEnumerable<T> collection)
+        public static IEnumerable<IEnumerable<T>> GetCombines<T>(
+        this IEnumerable<T> collection, int k, MyComparer<T> comparer)
+        where T : IComparable
         {
-            
-            List<T> a = new List<T>();
-            
-            foreach (var item1 in collection)
+           collection.Similarity(comparer);
+            return k == 0 ? new[] { Array.Empty<T>() } : collection.SelectMany((e, i) => collection.Skip(i).GetCombines(k - 1,comparer).Select(c => (new[] { e }).Concat(c)));
+        }
+
+        public static IEnumerable<IEnumerable<T>> GetAllSubstes<T>(
+        this IEnumerable<T> collection, IEqualityComparer<T> comparer)
+        {
+            collection.Similarity(comparer);
+            var ar = collection.ToList();
+
+            var res = new List<List<T>>();
+
+            int size = ar.Count;
+
+            for (int i = 0; i < (1 << size); i++)
             {
-                a.Add(item1);
-            }
-            for(int i=1; i<=a.Count; i++)
-            {
-                List<int> b = new List<int>();
-                
-                for (int j = 0; j +i <= a.Count; j++)
+                res.Add(new List<T>());
+                for (int j = 0; j < size; j++)
                 {
-                    Console.Write("[");
-                    for(int l = j; l < j + i; l++)
+                    if ((i & (1 << j)) != 0)
                     {
-                        Console.Write(a[l]+",");
+                        res.Last().Add(ar[j]);
                     }
-                    Console.WriteLine("]");
                 }
             }
-            
+
+            return res;
+
         }
 
         public static void _GetPermutations<T>(this IEnumerable<T> collection, IList<T> arr,string current="")
