@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace Task1
 {
     internal class Student:
-    IEquatable<string>,
-    IEquatable<int>,
-    IEquatable<Student>,
-    IEquatable<object>
+    IEquatable<Student>
+    
     {
         public string FirstName { get; }
         public string SecondName { get; }
@@ -32,16 +30,20 @@ namespace Task1
             this.PracticeCourse = PracticeCourse ?? throw new ArgumentNullException(nameof(PracticeCourse));
         }
 
-        public int getCourse()
+        public int Course
         {
-            string group = this.Group;
-            DateTime now_date = DateTime.Now;
-            int year = Convert.ToInt32(group.Substring(9,2))+2000;
-            DateTime admission_date = new DateTime(year, 9, 1);
-            string s = Convert.ToString(now_date.Subtract(admission_date));
-            s = s.Substring(0, s.IndexOf('.'));
-            double course = Math.Ceiling(Convert.ToDouble(s) / 365);
-            return (int)course;
+            get
+            {
+                string group = this.Group;
+                DateTime now_date = DateTime.Now;
+                int year = Convert.ToInt32(group.Substring(9,2))+2000;
+                DateTime admission_date = new DateTime(year, 9, 1);
+                string s = Convert.ToString(now_date.Subtract(admission_date));
+                s = s.Substring(0, s.IndexOf('.'));
+                double course = Math.Ceiling(Convert.ToDouble(s) / 365);
+                return (int)course;
+            }
+           
         }
 
         public override string ToString()
@@ -51,43 +53,11 @@ namespace Task1
 
         public override int GetHashCode()
         {
-            return FirstName.GetHashCode() * 23 + SecondName.GetHashCode() * 3 + Patronymic.GetHashCode() * 7 + Group.GetHashCode() * 13 + PracticeCourse.GetHashCode() * 11;
+            return HashCode.Combine(FirstName, SecondName, Patronymic, Group, PracticeCourse);
+            
         }
         
-        public override bool Equals(
-        object? obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-            if (obj is string @string)
-            {
-                return Equals(@string);
-            }
-            if (obj is int @int)
-            {
-                return Equals(@int);
-            }
-            if (obj is Student std)
-            {
-                return Equals(std);
-            }
-
-            return false;
-        }
-
-        public bool Equals(
-            string @string)
-        {
-            return this.ToString().Equals(@string);
-        }
-
-        public bool Equals(
-            int @int)
-        {
-            return this.GetHashCode().Equals(@int);
-        }
+        
 
         public bool Equals(
             Student? std)
@@ -104,31 +74,7 @@ namespace Task1
                 && PracticeCourse.Equals(std.PracticeCourse, StringComparison.Ordinal);
         }
 
-        bool IEquatable<object>.Equals(
-       object? obj)
-        {
-            
-            if (obj == null)
-            {
-                return false;
-            }
-
-            if (obj is Student std)
-            {
-                return Equals(std);
-            }
-            if (obj is string @string)
-            {
-                return Equals(@string);
-            }
-
-            if (obj is int @int)
-            {
-                return Equals(@int);
-            }
-
-            return false;
-        }
+        
 
     }
 }
