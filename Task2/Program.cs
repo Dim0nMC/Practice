@@ -4,15 +4,32 @@ namespace Task2
     {
         static void Main(string[] args)
         {
-            OwnArray myarray = new OwnArray();
+            OwnArray<int> myarray = new OwnArray<int>();
             myarray.Insert(1, 0);
             myarray.Insert(2, 1);
             myarray.Insert(3, 2);
             myarray.Insert(4, 3);
+            
             Console.WriteLine(myarray.ToString());
-            myarray.GetCombines();
+            var a = myarray.GetCombines(3, MyComparer<int>.Instance).ToList();
+            foreach (var item in a)
+            {
+                foreach (var i in item)
+                {
+                    Console.Write(i);
+                }
+                Console.Write(Environment.NewLine);
+            }
             Console.WriteLine();
-            myarray.GetAllSubstes();
+            var b = myarray.GetAllSubstes(MyComparer<int>.Instance).ToList();
+            foreach (var item in b)
+            {
+                foreach (var i in item)
+                {
+                    Console.Write(i);
+                }
+                Console.Write(Environment.NewLine);
+            }
             Console.WriteLine();
             myarray.GetPermutations(myarray);
         }
