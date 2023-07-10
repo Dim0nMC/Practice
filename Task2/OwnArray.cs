@@ -42,22 +42,7 @@ namespace Task2
             return s;
         }
 
-        public void GetCombines()
-        {
-            int i = 0;
-            foreach (var item in _array._GetCombines(2))
-            {
-                if (i % 2 == 0)
-                {
-                    Console.Write("["+ item +", ");
-                }
-                if (i % 2 == 1)
-                {
-                    Console.WriteLine(item + "]");
-                }
-                i++;
-            }
-        }
+        
         
         public void GetPermutations(OwnArray<T> myarray)
         {
