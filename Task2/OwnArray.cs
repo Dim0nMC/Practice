@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace Task2
 {
-    internal class OwnArray:
-        IEnumerable<int>
+    internal class OwnArray<T>:
+        IEnumerable<T>
     {
-        private List<int> _array;
+        private List<T> _array;
 
         public OwnArray()
         {
-            _array = new List<int>();
+            _array = new List<T>();
         }
 
         private OwnArray(
-            List<int> array)
+            List<T> array)
         {
-            _array = new List<int>(array);
+            _array = new List<T>(array);
         }
 
 
 
-       public void Insert(int value, int index)
+       public void Insert(T value, int index)
         {
             _array.Insert(index, value);
             
@@ -59,9 +59,9 @@ namespace Task2
             }
         }
         
-        public void GetPermutations(OwnArray myarray)
+        public void GetPermutations(OwnArray<T> myarray)
         {
-            List<int> a = new List<int>();
+            List<T> a = new List<T>();
             foreach(var item in myarray) 
             {
                 a.Add(item);
@@ -70,11 +70,11 @@ namespace Task2
         }
 
 
-        public IEnumerator<int> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
-            foreach (var arrayItem in _array)
+            for(int i = 0; i < _array.Count; i++)
             {
-                yield return arrayItem;
+                yield return _array[i];
             }
 
         }
