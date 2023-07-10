@@ -28,8 +28,8 @@ namespace Task1
                 Console.WriteLine(obj1.FirstName);
                 Console.WriteLine(obj2.Group + "\n");
 
-                Console.WriteLine(obj1.getCourse());
-                Console.WriteLine(obj2.getCourse() + "\n");
+                Console.WriteLine(obj1.Course);
+                Console.WriteLine(obj2.Course + "\n");
 
                 Console.WriteLine(obj1.GetHashCode());
                 Console.WriteLine(obj2.GetHashCode() + "\n");
@@ -41,11 +41,6 @@ namespace Task1
                 Student obj3 = new Student("Дмитрий", "Селивёрстов", "Сергеевич", "М8О-201Б-21", "C#");
                 Console.WriteLine(obj1.Equals(obj3) + "\n");
 
-                Console.WriteLine(obj1.Equals((object)obj3) + "\n");
-
-                Console.WriteLine(obj1.Equals(obj3.ToString()) + "\n");
-
-                Console.WriteLine(obj1.Equals(obj2.GetHashCode()) + "\n");
 
             }
             
